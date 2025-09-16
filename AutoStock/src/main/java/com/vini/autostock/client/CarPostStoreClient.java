@@ -1,6 +1,7 @@
 package com.vini.autostock.client;
 
 import com.vini.autostock.dto.CarPostDTO;
+import com.vini.autostock.dto.OwnerPostDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -20,5 +21,17 @@ public class CarPostStoreClient {
     public List<CarPostDTO> carForSalesClient() {
         ResponseEntity<CarPostDTO[]> responseEntity = restTemplate.getForEntity(POSTS_STORE_SERVICE_URI+"/cars",CarPostDTO[].class);
         return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
+    }
+
+    public void ownerPostsClient(OwnerPostDTO newUser){
+        restTemplate.postForEntity(USER_STORE_SERVICE_URI, newUser, OwnerPostDTO.class);
+    }
+
+    public void changeCarForSaleClient(CarPostDTO carPostDTO, String id){
+        restTemplate.put(POSTS_STORE_SERVICE_URI+"/car/"+id, carPostDTO, CarPostDTO.class);
+    }
+
+    public void deleteCarForSaleClient(String id){
+        restTemplate.delete(POSTS_STORE_SERVICE_URI+"/car/"+id);
     }
 }
