@@ -2,6 +2,7 @@ package com.vini.autostock.controller;
 
 import com.vini.autostock.client.CarPostStoreClient;
 import com.vini.autostock.dto.CarPostDTO;
+import com.vini.autostock.message.KafkaProducerMessage;
 import com.vini.autostock.service.impl.CarPostStoreServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,18 @@ public class CarPostController {
 
     @Autowired
     private CarPostStoreServiceImpl carPostStoreService;
+
     @Autowired
     private CarPostStoreClient carPostStoreClient;
+
+    @Autowired
+    private KafkaProducerMessage kafkaProducerMessage;
+
+    @PostMapping("/post")
+    public ResponseEntity postCarForSale(@RequestBody CarPostDTO carPostDTO) {
+        kafkaProducerMessage.sendMessage(carPostDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
     @GetMapping("/posts")
     public ResponseEntity<List<CarPostDTO>> getCarSales() {
