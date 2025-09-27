@@ -44,5 +44,10 @@ public class CarPostController {
         carPostStoreClient.deleteCarForSaleClient(id);
         return new ResponseEntity(HttpStatus.OK);
     }
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping() {
+        return ResponseEntity.ok("pong");
+    }
+
 
 }
