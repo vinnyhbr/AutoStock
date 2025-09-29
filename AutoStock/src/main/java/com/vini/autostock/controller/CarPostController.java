@@ -44,6 +44,7 @@ public class CarPostController {
         carPostStoreClient.deleteCarForSaleClient(id);
         return new ResponseEntity(HttpStatus.OK);
     }
+    //method para saber se o server está on
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
         return ResponseEntity.ok("pong");
